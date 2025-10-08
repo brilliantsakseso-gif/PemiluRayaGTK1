@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemilihan Ketua OSIS - SMAN 1 Pamijahan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .loading {
+            display: none;
+        }
+        .loading.show {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="h-full gradient-bg font-sans">
+    <!-- Main Login Page -->
+    <div id="mainLoginPage" class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div class="text-center">
+                <img src="https://freeimage.host/i/KGWzlVI" alt="Logo SMAN 1 Pamijahan" class="mx-auto h-24 w-24 rounded-full shadow-lg" onerror="this.src=''; this.alt='Logo gagal dimuat'; this.style.display='none';">
+                <h2 class="mt-6 text-3xl font-extrabold text-white">
+                    PEMILIHAN KETUA OSIS
+                </h2>
+                <h3 class="mt-2 text-xl font-bold text-blue-100">
+                    SMAN 1 PAMIJAHAN
+                </h3>
+                <p class="mt-2 text-lg font-semibold text-yellow-300">
+                    "SMANJA Super TEAM"
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-lg card-shadow p-8">
+                <div class="flex space-x-4 mb-6">
+                    <button id="gtkLoginBtn" onclick="showGTKLogin()" 
+                            class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200">
+                        Login GTK
+                    </button>
+                    <button id="adminLoginBtn" onclick="showAdminLogin()" 
+                            class="flex-1 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-200">
+                        Login Admin
+                    </button>
+                </div>
+
+                <!-- GTK Login Form -->
+                <form id="gtkLoginForm" class="space-y-6">
+                    <div>
+                        <label for="token" class="block text-sm font-medium text-gray-700 mb-2">
+                            Token GTK
+                        </label>
+                        <input id="token" name="token" type="text" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               placeholder="Masukkan token GTK Anda">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                            Password
+                        </label>
+                        <input id="password" name="password" type="password" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               placeholder="Masukkan password Anda">
+                    </div>
+                    
+                    <div>
+                        <button type="submit" 
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200">
+                            <span class="loading"></span>
+                            <span id="gtkLoginText">Masuk ke Sistem Pemilihan</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Admin Login Form -->
+                <form id="adminLoginForm" class="space-y-6 hidden">
+                    <div>
+                        <label for="adminUsername" class="block text-sm font-medium text-gray-700 mb-2">
+                            Username Admin
+                        </label>
+                        <input id="adminUsername" name="adminUsername" type="text" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                               placeholder="Masukkan username admin">
+                    </div>
+                    
+                    <div>
+                        <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                            Password Admin
+                        </label>
+                        <input id="adminPassword" name="adminPassword" type="password" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                               placeholder="Masukkan password admin">
+                    </div>
+                    
+                    <div>
+                        <button type="submit" 
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-200">
+                            <span class="loading"></span>
+                            <span id="adminLoginText">Masuk ke Dashboard Admin</span>
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded hidden">
+                    <p class="text-sm"></p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-white text-sm">
+                    Sistem Pemilihan Ketua OSIS Digital<br>
+                    SMAN 1 Pamijahan 2024
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden min-h-full bg-gray-100">
+        <nav class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <img src="https://freeimage.host/i/KGWzlVI" alt="Logo" class="h-8 w-8 rounded-full mr-3" onerror="this.src=''; this.alt='Logo gagal dimuat'; this.style.display='none';">
+                        <h1 class="text-lg font-semibold text-gray-900">Dashboard Admin OSIS</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">Admin:</span>
+                        <span class="text-sm font-medium text-gray-700">Administrator</span>
+                        <button onclick="logout()" class="text-sm text-red-600 hover:text-red-800">Keluar</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <!-- Dashboard Tabs -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button id="dashboardTab" onclick="showTab('dashboard')" 
+                                class="py-2 px-1 border-b-2 border-purple-500 font-medium text-sm text-purple-600">
+                            Dashboard
+                        </button>
+                        <button id="reportTab" onclick="showTab('report')" 
+                                class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                            Laporan
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardContent">
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg card-shadow p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm">👥</span>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Total GTK</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="totalGTK">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg card-shadow p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm">✅</span>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Sudah Memilih</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="totalVoted">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg card-shadow p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm">⏳</span>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Belum Memilih</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="totalNotVoted">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg card-shadow p-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-sm">📊</span>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-500">Partisipasi</p>
+                                <p class="text-2xl font-semibold text-gray-900" id="participationRate">0%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vote Results -->
+                <div class="bg-white rounded-lg card-shadow p-6 mb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-6">Hasil Sementara Pemilihan</h3>
+                    
+                    <!-- Podium Display -->
+                    <div class="flex justify-center items-end space-x-4 mb-8">
+                        <!-- 2nd Place -->
+                        <div id="podium2" class="text-center">
+                            <div class="bg-gray-200 rounded-lg p-4 mb-2 relative">
+                                <div class="absolute -top-3 -right-3 w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                                <img id="podium2Image" src="" alt="" class="w-16 h-16 rounded-full mx-auto mb-2 object-cover" onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                                <p id="podium2Name" class="font-semibold text-sm text-gray-900"></p>
+                                <p id="podium2Class" class="text-xs text-gray-600"></p>
+                                <p id="podium2Votes" class="text-lg font-bold text-gray-600 mt-1">0</p>
+                                <p class="text-xs text-gray-500">suara</p>
+                            </div>
+                            <div class="bg-gray-400 h-20 rounded-t-lg flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">🥈</span>
+                            </div>
+                        </div>
+
+                        <!-- 1st Place -->
+                        <div id="podium1" class="text-center">
+                            <div class="bg-yellow-100 rounded-lg p-4 mb-2 relative border-2 border-yellow-400">
+                                <div class="absolute -top-3 -right-3 w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                                <img id="podium1Image" src="" alt="" class="w-20 h-20 rounded-full mx-auto mb-2 object-cover border-2 border-yellow-400" onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                                <p id="podium1Name" class="font-bold text-sm text-gray-900"></p>
+                                <p id="podium1Class" class="text-xs text-gray-600"></p>
+                                <p id="podium1Votes" class="text-xl font-bold text-yellow-600 mt-1">0</p>
+                                <p class="text-xs text-gray-500">suara</p>
+                            </div>
+                            <div class="bg-yellow-500 h-28 rounded-t-lg flex items-center justify-center">
+                                <span class="text-white font-bold text-2xl">🏆</span>
+                            </div>
+                        </div>
+
+                        <!-- 3rd Place -->
+                        <div id="podium3" class="text-center">
+                            <div class="bg-orange-100 rounded-lg p-4 mb-2 relative">
+                                <div class="absolute -top-3 -right-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                                <img id="podium3Image" src="" alt="" class="w-16 h-16 rounded-full mx-auto mb-2 object-cover" onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                                <p id="podium3Name" class="font-semibold text-sm text-gray-900"></p>
+                                <p id="podium3Class" class="text-xs text-gray-600"></p>
+                                <p id="podium3Votes" class="text-lg font-bold text-orange-600 mt-1">0</p>
+                                <p class="text-xs text-gray-500">suara</p>
+                            </div>
+                            <div class="bg-orange-500 h-16 rounded-t-lg flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">🥉</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Results Table -->
+                    <div class="space-y-3">
+                        <h4 class="font-medium text-gray-900 mb-3">Detail Perolehan Suara:</h4>
+                        <div id="result1" class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3" id="rank1">1</div>
+                                <img src="https://freeimage.host/i/KhiY9X2" alt="Aulia" class="w-12 h-12 rounded-full mr-4" onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                                <div>
+                                    <p class="font-medium text-gray-900">Aulia Putri Anggraeni</p>
+                                    <p class="text-sm text-gray-500">Kelas XI-8</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-2xl font-bold text-blue-600" id="votes1">0</p>
+                                <p class="text-sm text-gray-500">suara</p>
+                            </div>
+                        </div>
+
+                        <div id="result2" class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3" id="rank2">2</div>
+                                <img src="https://freeimage.host/i/KhicFNj" alt="Muhammad" class="w-12 h-12 rounded-full mr-4" onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                                <div>
+                                    <p class="font-medium text-gray-900">Muhammad Solehudin</p>
+                                    <p class="text-sm text-gray-500">Kelas XI-5</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-2xl font-bold text-green-600" id="votes2">0</p>
+                                <p class="text-sm text-gray-500">suara</p>
+                            </div>
+                        </div>
+
+                        <div id="result3" class="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3" id="rank3">3</div>
+                                <img src="https://freeimage.host/i/Khichx4" alt="Natasya" class="w-12 h-12 rounded-full mr-4" onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                                <div>
+                                    <p class="font-medium text-gray-900">Natasya Damayanti</p>
+                                    <p class="text-sm text-gray-500">Kelas XI-7</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-2xl font-bold text-purple-600" id="votes3">0</p>
+                                <p class="text-sm text-gray-500">suara</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Content -->
+            <div id="reportContent" class="hidden">
+                <div class="bg-white rounded-lg card-shadow p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-medium text-gray-900">Laporan Pemilihan</h3>
+                        <div class="space-x-2">
+                            <button onclick="exportReport()" 
+                                    class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition duration-200">
+                                Export Laporan
+                            </button>
+                            <button onclick="resetAllData()" 
+                                    class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200">
+                                Reset Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Report -->
+                    <div class="mb-8">
+                        <h4 class="text-md font-medium text-gray-900 mb-4">Ringkasan Pemilihan</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                <div>
+                                    <p class="text-2xl font-bold text-blue-600" id="reportTotalGTK">0</p>
+                                    <p class="text-sm text-gray-600">Total GTK</p>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-bold text-green-600" id="reportTotalVoted">0</p>
+                                    <p class="text-sm text-gray-600">Sudah Memilih</p>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-bold text-yellow-600" id="reportTotalNotVoted">0</p>
+                                    <p class="text-sm text-gray-600">Belum Memilih</p>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-bold text-purple-600" id="reportParticipationRate">0%</p>
+                                    <p class="text-sm text-gray-600">Partisipasi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Results -->
+                    <div class="mb-8">
+                        <h4 class="text-md font-medium text-gray-900 mb-4">Hasil Detail Pemilihan</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kandidat</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelas</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah Suara</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Persentase</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Aulia Putri Anggraeni</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">XI-8</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" id="reportVotes1">0</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" id="reportPercent1">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Muhammad Solehudin</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">XI-5</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" id="reportVotes2">0</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" id="reportPercent2">0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Natasya Damayanti</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">XI-7</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" id="reportVotes3">0</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" id="reportPercent3">0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Voting Status -->
+                    <div class="mb-8">
+                        <h4 class="text-md font-medium text-gray-900 mb-4">Status Pemilihan GTK</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg max-h-64 overflow-y-auto">
+                            <div id="voterStatusList" class="space-y-2">
+                                <!-- Voter status will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Voting History -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-900 mb-4">Riwayat Pemilihan Real-time</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg max-h-80 overflow-y-auto">
+                            <div id="votingHistoryList" class="space-y-3">
+                                <p class="text-gray-500 text-sm text-center">Belum ada data pemilihan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GTK Voting Page -->
+    <div id="votingPage" class="hidden min-h-full">
+        <nav class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <img src="https://freeimage.host/i/KGWzlVI" alt="Logo" class="h-8 w-8 rounded-full mr-3" onerror="this.src=''; this.alt='Logo gagal dimuat'; this.style.display='none';">
+                        <h1 class="text-lg font-semibold text-gray-900">Pemilihan Ketua OSIS</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">GTK:</span>
+                        <span id="voterName" class="text-sm font-medium text-gray-700"></span>
+                        <button onclick="logout()" class="text-sm text-red-600 hover:text-red-800">Keluar</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-white mb-2">Pilih Kandidat Ketua OSIS</h2>
+                <p class="text-blue-100">Pilih salah satu kandidat di bawah ini</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <!-- Kandidat 1 -->
+                <div class="bg-white rounded-lg card-shadow p-6 text-center">
+                    <img src="https://freeimage.host/i/KhiY9X2" alt="Aulia Putri Anggraeni" 
+                         class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-md"
+                         onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Aulia Putri Anggraeni</h3>
+                    <p class="text-gray-600 mb-4">Kelas XI-8</p>
+                    <div class="space-y-2">
+                        <button onclick="showVisionMission(1)" 
+                                class="w-full bg-blue-100 text-blue-700 py-2 px-4 rounded-md hover:bg-blue-200 transition duration-200 text-sm">
+                            Lihat Visi & Misi
+                        </button>
+                        <button onclick="selectCandidate(1)" 
+                                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">
+                            Pilih Kandidat
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kandidat 2 -->
+                <div class="bg-white rounded-lg card-shadow p-6 text-center">
+                    <img src="https://freeimage.host/i/KhicFNj" alt="Muhammad Solehudin" 
+                         class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-md"
+                         onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Muhammad Solehudin</h3>
+                    <p class="text-gray-600 mb-4">Kelas XI-5</p>
+                    <div class="space-y-2">
+                        <button onclick="showVisionMission(2)" 
+                                class="w-full bg-green-100 text-green-700 py-2 px-4 rounded-md hover:bg-green-200 transition duration-200 text-sm">
+                            Lihat Visi & Misi
+                        </button>
+                        <button onclick="selectCandidate(2)" 
+                                class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200">
+                            Pilih Kandidat
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kandidat 3 -->
+                <div class="bg-white rounded-lg card-shadow p-6 text-center">
+                    <img src="https://freeimage.host/i/Khichx4" alt="Natasya Damayanti" 
+                         class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-md"
+                         onerror="this.src=''; this.alt='Foto gagal dimuat'; this.style.display='none';">
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Natasya Damayanti</h3>
+                    <p class="text-gray-600 mb-4">Kelas XI-7</p>
+                    <div class="space-y-2">
+                        <button onclick="showVisionMission(3)" 
+                                class="w-full bg-purple-100 text-purple-700 py-2 px-4 rounded-md hover:bg-purple-200 transition duration-200 text-sm">
+                            Lihat Visi & Misi
+                        </button>
+                        <button onclick="selectCandidate(3)" 
+                                class="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition duration-200">
+                            Pilih Kandidat
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision Mission Modal -->
+            <div id="visionModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg p-6 max-w-2xl mx-4 max-h-96 overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 id="modalTitle" class="text-xl font-bold text-gray-900"></h3>
+                        <button onclick="closeVisionModal()" class="text-gray-400 hover:text-gray-600">
+                            <span class="text-2xl">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalContent" class="text-gray-700 space-y-4"></div>
+                </div>
+            </div>
+
+            <!-- Confirmation Modal -->
+            <div id="confirmationModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Konfirmasi Pilihan</h3>
+                    <p class="text-gray-700 mb-6">Apakah Anda yakin memilih <span id="selectedCandidate" class="font-semibold"></span>?</p>
+                    <div class="flex space-x-3">
+                        <button onclick="confirmVote()" 
+                                class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                            Ya, Pilih
+                        </button>
+                        <button onclick="cancelVote()" 
+                                class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400">
+                            Batal
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Page -->
+    <div id="successPage" class="hidden min-h-full flex items-center justify-center py-12 px-4">
+        <div class="max-w-md w-full text-center">
+            <div class="bg-white rounded-lg card-shadow p-8">
+                <div class="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-2xl">✅</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Suara Berhasil Disimpan!</h2>
+                <p class="text-gray-600 mb-6">Terima kasih telah berpartisipasi dalam pemilihan Ketua OSIS SMAN 1 Pamijahan.</p>
+                <button onclick="logout()" 
+                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                    Keluar dari Sistem
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userData = null;
+        let selectedCandidateId = null;
+        let isAdmin = false;
+        let voterData = {};
+        let voteResults = { 1: 0, 2: 0, 3: 0 };
+        let votedUsers = new Set();
+        let voteTimestamps = {}; // Store voting timestamps
+
+        // Initialize with fresh data - no localStorage loading
+        function initializeFreshData() {
+            voteResults = { 1: 0, 2: 0, 3: 0 };
+            votedUsers = new Set();
+            voteTimestamps = {};
+            
+            // Clear any existing localStorage data
+            localStorage.removeItem('osisVoteResults');
+            localStorage.removeItem('osisVotedUsers');
+            localStorage.removeItem('osisVoteTimestamps');
+            
+            console.log('System initialized with fresh data - all voting data cleared');
+        }
+
+        // Save data to localStorage
+        function saveDataToStorage() {
+            try {
+                localStorage.setItem('osisVoteResults', JSON.stringify(voteResults));
+                localStorage.setItem('osisVotedUsers', JSON.stringify([...votedUsers]));
+                localStorage.setItem('osisVoteTimestamps', JSON.stringify(voteTimestamps));
+                console.log('Data saved to localStorage');
+            } catch (error) {
+                console.error('Error saving data to localStorage:', error);
+            }
+        }
+
+        // Load data from localStorage (only used after initial setup)
+        function loadStoredData() {
+            try {
+                const storedVoteResults = localStorage.getItem('osisVoteResults');
+                const storedVotedUsers = localStorage.getItem('osisVotedUsers');
+                const storedVoteTimestamps = localStorage.getItem('osisVoteTimestamps');
+                
+                if (storedVoteResults) {
+                    voteResults = JSON.parse(storedVoteResults);
+                }
+                
+                if (storedVotedUsers) {
+                    votedUsers = new Set(JSON.parse(storedVotedUsers));
+                }
+                
+                if (storedVoteTimestamps) {
+                    voteTimestamps = JSON.parse(storedVoteTimestamps);
+                }
+                
+                console.log('Data loaded from localStorage:', {
+                    voteResults,
+                    votedUsersCount: votedUsers.size,
+                    timestampsCount: Object.keys(voteTimestamps).length
+                });
+            } catch (error) {
+                console.error('Error loading stored data:', error);
+            }
+        }
+
+        const candidates = {
+            1: "Aulia Putri Anggraeni",
+            2: "Muhammad Solehudin",
+            3: "Natasya Damayanti"
+        };
+
+        const candidateData = {
+            1: {
+                name: "Aulia Putri Anggraeni",
+                class: "XI-8",
+                vision: "Terwujudnya Siswa/i SMA NEGERI 1 PAMIJAHAN Menjadi Lebih Disiplin, Sopan, Dan Tanggung Jawab.",
+                mission: [
+                    "Meningkatkan Keimanan Dan Ketakwaan Terhadap Tuhan Yang Maha Esa.",
+                    "Menerapkan Sikap 3R (Ramah, Rapih, Resik).",
+                    "Menerapkan Budaya 5S (Senyum, Sapa, Salam, Sopan, Santun).",
+                    "Menerapkan Sikap Peduli Sampah Dengan Melaksanakan Operasi Semut."
+                ],
+                programs: [
+                    "KOSAKCA (kotak saran dan kritik acara)",
+                    "Mading poster hari besar nasional",
+                    "Mengadakan kumpul evaluasi osis setiap sebulan 2×",
+                    "JUMSIH (jumat bersih)"
+                ]
+            },
+            2: {
+                name: "Muhammad Solehudin",
+                class: "XI-5",
+                vision: "Terwujudnya Osis SMA Negeri 1 pamijahan menjadi salah satu organisasi yang visioner dan sebagai wadah aspirasi untuk menuju generasi yang berkualitas kompeten dan kreatif",
+                mission: [
+                    "Membangun budaya kolaborasi yang hangat dan inklusif",
+                    "Meningkatkan semangat kebersamaan dan solidaritas antar siswa melalui kegiatan yang positif",
+                    "Menanamkan nilai nilai sikap disiplin dan jujur bertanggung jawab serta peduli pada lingkungan"
+                ],
+                programs: [
+                    "SPASI (Sarana Penampung Aspirasi)",
+                    "STAR OF SMANJA (Bintang SMAN 1 Pamijahan)",
+                    "FKOS (Forum Komunikasi Organisasi/Ekstrakurikuler SMANJA)"
+                ]
+            },
+            3: {
+                name: "Natasya Damayanti",
+                class: "XI-7",
+                vision: "Mewujudkan OSIS yang komunikatif, bertanggung jawab, dan kreatif, serta menjadi wadah aspirasi siswa untuk menciptakan lingkungan sekolah yang disiplin, bersih, dan berkarakter literasi.",
+                mission: [
+                    "Membangun komunikasi aktif antar pengurus melalui rapat evaluasi rutin setiap bulan.",
+                    "Melatih tanggung jawab setiap pengurus dengan pembagian tugas yang jelas, adil, dan terarah.",
+                    "Menjadi penghubung antara siswa dan sekolah, terutama dalam hal kedisiplinan, kebersihan, dan aspirasi siswa.",
+                    "Menjadikan OSIS bukan hanya sekadar organisasi formal, tetapi juga rumah untuk belajar kepemimpinan dan membangun solidaritas."
+                ],
+                programs: [
+                    "Rapat Evaluasi Bulanan",
+                    "Program Disiplin Kreatif Kampanye \"Bangga Taat Aturan\".",
+                    "Green & Clean Movement",
+                    "Next Level Student",
+                    "Jembatan Ide"
+                ]
+            }
+        };
+
+        // Show GTK or Admin login form
+        function showGTKLogin() {
+            document.getElementById('gtkLoginForm').classList.remove('hidden');
+            document.getElementById('adminLoginForm').classList.add('hidden');
+            document.getElementById('gtkLoginBtn').className = 'flex-1 py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200';
+            document.getElementById('adminLoginBtn').className = 'flex-1 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-200';
+        }
+
+        function showAdminLogin() {
+            document.getElementById('adminLoginForm').classList.remove('hidden');
+            document.getElementById('gtkLoginForm').classList.add('hidden');
+            document.getElementById('adminLoginBtn').className = 'flex-1 py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition duration-200';
+            document.getElementById('gtkLoginBtn').className = 'flex-1 py-2 px-4 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-200';
+        }
+
+        // Load and parse CSV data
+        async function loadVoterData() {
+            try {
+                const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vR0O0G0DecuiGm7wMRsddCmF6-ps8P35LiDDdig1E_yZr4Ea1c9O60hEtcJ38tLgQr-wZsAfldWoKla/pub?gid=0&single=true&output=csv');
+                const csvText = await response.text();
+                
+                const lines = csvText.trim().split('\n');
+                const data = {};
+                
+                // Skip header row, start from index 1
+                for (let i = 1; i < lines.length; i++) {
+                    const [token, password, ...rest] = lines[i].split(',');
+                    if (token && password) {
+                        data[token.trim()] = {
+                            password: password.trim(),
+                            name: rest.length > 0 ? rest[0].trim() : `GTK ${token.trim()}`,
+                            hasVoted: false
+                        };
+                    }
+                }
+                
+                voterData = data;
+                return data;
+            } catch (error) {
+                console.error('Error loading voter data:', error);
+                return {};
+            }
+        }
+
+        // Handle GTK login form submission
+        document.getElementById('gtkLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const token = document.getElementById('token').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loading = document.querySelector('#gtkLoginForm .loading');
+            const loginText = document.getElementById('gtkLoginText');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Show loading state
+            loading.classList.add('show');
+            loginText.textContent = 'Memverifikasi...';
+            errorMessage.classList.add('hidden');
+            
+            try {
+                const data = await loadVoterData();
+                
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                if (data[token] && data[token].password === password) {
+                    if (votedUsers.has(token)) {
+                        showError('Anda sudah melakukan pemilihan sebelumnya.');
+                    } else {
+                        userData = { token, name: data[token].name };
+                        isAdmin = false;
+                        showVotingPage();
+                    }
+                } else {
+                    showError('Token atau password tidak valid. Silakan periksa kembali.');
+                }
+            } catch (error) {
+                showError('Terjadi kesalahan saat memverifikasi data. Silakan coba lagi.');
+            }
+            
+            // Reset loading state
+            loading.classList.remove('show');
+            loginText.textContent = 'Masuk ke Sistem Pemilihan';
+        });
+
+        // Handle Admin login form submission
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            const loading = document.querySelector('#adminLoginForm .loading');
+            const loginText = document.getElementById('adminLoginText');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Show loading state
+            loading.classList.add('show');
+            loginText.textContent = 'Memverifikasi...';
+            errorMessage.classList.add('hidden');
+            
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            if (username === 'osiskecebong' && password === 'kecegaksombong24') {
+                userData = { name: 'Administrator' };
+                isAdmin = true;
+                await loadVoterData();
+                showAdminDashboard();
+            } else {
+                showError('Username atau password admin tidak valid.');
+            }
+            
+            // Reset loading state
+            loading.classList.remove('show');
+            loginText.textContent = 'Masuk ke Dashboard Admin';
+        });
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.querySelector('p').textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function showVotingPage() {
+            document.getElementById('mainLoginPage').classList.add('hidden');
+            document.getElementById('votingPage').classList.remove('hidden');
+            document.getElementById('voterName').textContent = userData.name;
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('mainLoginPage').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            updateDashboardStats();
+        }
+
+        function showTab(tabName) {
+            if (tabName === 'dashboard') {
+                document.getElementById('dashboardContent').classList.remove('hidden');
+                document.getElementById('reportContent').classList.add('hidden');
+                document.getElementById('dashboardTab').className = 'py-2 px-1 border-b-2 border-purple-500 font-medium text-sm text-purple-600';
+                document.getElementById('reportTab').className = 'py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300';
+            } else {
+                document.getElementById('reportContent').classList.remove('hidden');
+                document.getElementById('dashboardContent').classList.add('hidden');
+                document.getElementById('reportTab').className = 'py-2 px-1 border-b-2 border-purple-500 font-medium text-sm text-purple-600';
+                document.getElementById('dashboardTab').className = 'py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300';
+                updateReportData();
+            }
+        }
+
+        function updateDashboardStats() {
+            const totalGTK = Object.keys(voterData).length;
+            const totalVoted = votedUsers.size;
+            const totalNotVoted = totalGTK - totalVoted;
+            const participationRate = totalGTK > 0 ? Math.round((totalVoted / totalGTK) * 100) : 0;
+
+            document.getElementById('totalGTK').textContent = totalGTK;
+            document.getElementById('totalVoted').textContent = totalVoted;
+            document.getElementById('totalNotVoted').textContent = totalNotVoted;
+            document.getElementById('participationRate').textContent = participationRate + '%';
+
+            document.getElementById('votes1').textContent = voteResults[1];
+            document.getElementById('votes2').textContent = voteResults[2];
+            document.getElementById('votes3').textContent = voteResults[3];
+
+            // Update podium and rankings
+            updatePodiumAndRankings();
+        }
+
+        function updatePodiumAndRankings() {
+            // Create array of candidates with their votes for sorting
+            const candidateResults = [
+                { id: 1, name: "Aulia Putri Anggraeni", class: "XI-8", votes: voteResults[1], image: "https://freeimage.host/i/KhiY9X2" },
+                { id: 2, name: "Muhammad Solehudin", class: "XI-5", votes: voteResults[2], image: "https://freeimage.host/i/KhicFNj" },
+                { id: 3, name: "Natasya Damayanti", class: "XI-7", votes: voteResults[3], image: "https://freeimage.host/i/Khichx4" }
+            ];
+
+            // Sort by votes (descending)
+            candidateResults.sort((a, b) => b.votes - a.votes);
+
+            // Update podium display
+            if (candidateResults.length >= 1) {
+                const first = candidateResults[0];
+                document.getElementById('podium1Image').src = first.image;
+                document.getElementById('podium1Name').textContent = first.name;
+                document.getElementById('podium1Class').textContent = first.class;
+                document.getElementById('podium1Votes').textContent = first.votes;
+            }
+
+            if (candidateResults.length >= 2) {
+                const second = candidateResults[1];
+                document.getElementById('podium2Image').src = second.image;
+                document.getElementById('podium2Name').textContent = second.name;
+                document.getElementById('podium2Class').textContent = second.class;
+                document.getElementById('podium2Votes').textContent = second.votes;
+            }
+
+            if (candidateResults.length >= 3) {
+                const third = candidateResults[2];
+                document.getElementById('podium3Image').src = third.image;
+                document.getElementById('podium3Name').textContent = third.name;
+                document.getElementById('podium3Class').textContent = third.class;
+                document.getElementById('podium3Votes').textContent = third.votes;
+            }
+
+            // Update detailed results with proper ranking
+            candidateResults.forEach((candidate, index) => {
+                const rank = index + 1;
+                const resultDiv = document.getElementById(`result${candidate.id}`);
+                const rankElement = document.getElementById(`rank${candidate.id}`);
+                
+                if (resultDiv && rankElement) {
+                    rankElement.textContent = rank;
+                    
+                    // Update colors based on ranking
+                    const colors = {
+                        1: { bg: 'bg-yellow-50', text: 'text-yellow-600', badge: 'bg-yellow-500' },
+                        2: { bg: 'bg-gray-50', text: 'text-gray-600', badge: 'bg-gray-400' },
+                        3: { bg: 'bg-orange-50', text: 'text-orange-600', badge: 'bg-orange-500' }
+                    };
+                    
+                    const color = colors[rank] || { bg: 'bg-gray-50', text: 'text-gray-600', badge: 'bg-gray-400' };
+                    
+                    // Update result div background
+                    resultDiv.className = `flex items-center justify-between p-4 ${color.bg} rounded-lg`;
+                    
+                    // Update rank badge
+                    rankElement.className = `w-8 h-8 ${color.badge} text-white rounded-full flex items-center justify-center font-bold text-sm mr-3`;
+                    
+                    // Update vote count color
+                    const voteElement = document.getElementById(`votes${candidate.id}`);
+                    if (voteElement) {
+                        voteElement.className = `text-2xl font-bold ${color.text}`;
+                    }
+                }
+            });
+        }
+
+        function updateReportData() {
+            const totalGTK = Object.keys(voterData).length;
+            const totalVoted = votedUsers.size;
+            const totalNotVoted = totalGTK - totalVoted;
+            const participationRate = totalGTK > 0 ? Math.round((totalVoted / totalGTK) * 100) : 0;
+
+            // Update summary
+            document.getElementById('reportTotalGTK').textContent = totalGTK;
+            document.getElementById('reportTotalVoted').textContent = totalVoted;
+            document.getElementById('reportTotalNotVoted').textContent = totalNotVoted;
+            document.getElementById('reportParticipationRate').textContent = participationRate + '%';
+
+            // Update detailed results
+            const totalVotes = voteResults[1] + voteResults[2] + voteResults[3];
+            document.getElementById('reportVotes1').textContent = voteResults[1];
+            document.getElementById('reportVotes2').textContent = voteResults[2];
+            document.getElementById('reportVotes3').textContent = voteResults[3];
+            
+            document.getElementById('reportPercent1').textContent = totalVotes > 0 ? Math.round((voteResults[1] / totalVotes) * 100) + '%' : '0%';
+            document.getElementById('reportPercent2').textContent = totalVotes > 0 ? Math.round((voteResults[2] / totalVotes) * 100) + '%' : '0%';
+            document.getElementById('reportPercent3').textContent = totalVotes > 0 ? Math.round((voteResults[3] / totalVotes) * 100) + '%' : '0%';
+
+            // Update voter status list
+            const voterStatusList = document.getElementById('voterStatusList');
+            voterStatusList.innerHTML = '';
+            
+            Object.keys(voterData).forEach(token => {
+                const voter = voterData[token];
+                const hasVoted = votedUsers.has(token);
+                const statusDiv = document.createElement('div');
+                statusDiv.className = `flex justify-between items-center p-2 rounded ${hasVoted ? 'bg-green-100' : 'bg-yellow-100'}`;
+                
+                let statusContent = `
+                    <div>
+                        <span class="text-sm font-medium">${voter.name}</span>
+                        ${hasVoted && voteTimestamps[token] ? `<br><span class="text-xs text-gray-600">Waktu: ${voteTimestamps[token].timestamp}</span>` : ''}
+                    </div>
+                    <span class="text-xs px-2 py-1 rounded ${hasVoted ? 'bg-green-200 text-green-800' : 'bg-yellow-200 text-yellow-800'}">
+                        ${hasVoted ? 'Sudah Memilih' : 'Belum Memilih'}
+                    </span>
+                `;
+                
+                statusDiv.innerHTML = statusContent;
+                voterStatusList.appendChild(statusDiv);
+            });
+
+            // Update voting history
+            updateVotingHistory();
+        }
+
+        function updateVotingHistory() {
+            const votingHistoryList = document.getElementById('votingHistoryList');
+            votingHistoryList.innerHTML = '';
+            
+            // Get all voting records and sort by timestamp (newest first)
+            const votingRecords = Object.values(voteTimestamps).sort((a, b) => {
+                return new Date(b.timestamp.split(', ').reverse().join(' ')) - new Date(a.timestamp.split(', ').reverse().join(' '));
+            });
+            
+            if (votingRecords.length === 0) {
+                votingHistoryList.innerHTML = '<p class="text-gray-500 text-sm text-center">Belum ada data pemilihan</p>';
+                return;
+            }
+            
+            votingRecords.forEach((record, index) => {
+                const historyDiv = document.createElement('div');
+                historyDiv.className = 'flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 shadow-sm';
+                
+                // Candidate colors
+                const candidateColors = {
+                    1: { bg: 'bg-blue-100', text: 'text-blue-800', border: 'border-blue-200' },
+                    2: { bg: 'bg-green-100', text: 'text-green-800', border: 'border-green-200' },
+                    3: { bg: 'bg-purple-100', text: 'text-purple-800', border: 'border-purple-200' }
+                };
+                
+                const color = candidateColors[record.candidate] || { bg: 'bg-gray-100', text: 'text-gray-800', border: 'border-gray-200' };
+                
+                historyDiv.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 ${color.bg} ${color.border} border rounded-full flex items-center justify-center">
+                            <span class="text-sm font-bold ${color.text}">${record.candidate}</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">${record.voterName}</p>
+                            <p class="text-xs text-gray-600">memilih ${record.candidateName}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-500">${record.timestamp}</p>
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${color.bg} ${color.text}">
+                            Vote #${votingRecords.length - index}
+                        </span>
+                    </div>
+                `;
+                
+                votingHistoryList.appendChild(historyDiv);
+            });
+        }
+
+        function exportReport() {
+            const totalGTK = Object.keys(voterData).length;
+            const totalVoted = votedUsers.size;
+            const totalVotes = voteResults[1] + voteResults[2] + voteResults[3];
+            
+            let reportText = `LAPORAN PEMILIHAN KETUA OSIS SMAN 1 PAMIJAHAN\n`;
+            reportText += `==============================================\n\n`;
+            reportText += `RINGKASAN:\n`;
+            reportText += `Total GTK: ${totalGTK}\n`;
+            reportText += `Sudah Memilih: ${totalVoted}\n`;
+            reportText += `Belum Memilih: ${totalGTK - totalVoted}\n`;
+            reportText += `Tingkat Partisipasi: ${totalGTK > 0 ? Math.round((totalVoted / totalGTK) * 100) : 0}%\n\n`;
+            reportText += `HASIL PEMILIHAN:\n`;
+            reportText += `1. Aulia Putri Anggraeni (XI-8): ${voteResults[1]} suara (${totalVotes > 0 ? Math.round((voteResults[1] / totalVotes) * 100) : 0}%)\n`;
+            reportText += `2. Muhammad Solehudin (XI-5): ${voteResults[2]} suara (${totalVotes > 0 ? Math.round((voteResults[2] / totalVotes) * 100) : 0}%)\n`;
+            reportText += `3. Natasya Damayanti (XI-7): ${voteResults[3]} suara (${totalVotes > 0 ? Math.round((voteResults[3] / totalVotes) * 100) : 0}%)\n\n`;
+            reportText += `Total Suara: ${totalVotes}\n\n`;
+            
+            // Add voting history
+            reportText += `RIWAYAT PEMILIHAN:\n`;
+            reportText += `==================\n`;
+            const votingRecords = Object.values(voteTimestamps).sort((a, b) => {
+                return new Date(a.timestamp.split(', ').reverse().join(' ')) - new Date(b.timestamp.split(', ').reverse().join(' '));
+            });
+            
+            if (votingRecords.length > 0) {
+                votingRecords.forEach((record, index) => {
+                    reportText += `${index + 1}. ${record.voterName} - ${record.candidateName} (${record.timestamp})\n`;
+                });
+            } else {
+                reportText += `Belum ada data pemilihan\n`;
+            }
+            
+            const blob = new Blob([reportText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'laporan-pemilihan-osis.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function resetAllData() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua data pemilihan? Tindakan ini tidak dapat dibatalkan!')) {
+                // Reset all voting data
+                voteResults = { 1: 0, 2: 0, 3: 0 };
+                votedUsers = new Set();
+                voteTimestamps = {};
+                
+                // Clear localStorage
+                localStorage.removeItem('osisVoteResults');
+                localStorage.removeItem('osisVotedUsers');
+                localStorage.removeItem('osisVoteTimestamps');
+                
+                // Reset voter data hasVoted status
+                Object.keys(voterData).forEach(token => {
+                    voterData[token].hasVoted = false;
+                });
+                
+                // Update dashboard
+                updateDashboardStats();
+                updateReportData();
+                
+                alert('Semua data pemilihan telah dihapus!');
+                console.log('All voting data has been reset');
+            }
+        }
+
+        function selectCandidate(candidateId) {
+            selectedCandidateId = candidateId;
+            document.getElementById('selectedCandidate').textContent = candidates[candidateId];
+            document.getElementById('confirmationModal').classList.remove('hidden');
+        }
+
+        function cancelVote() {
+            selectedCandidateId = null;
+            document.getElementById('confirmationModal').classList.add('hidden');
+        }
+
+        function confirmVote() {
+            // Record the vote with timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleString('id-ID', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            voteResults[selectedCandidateId]++;
+            votedUsers.add(userData.token);
+            voterData[userData.token].hasVoted = true;
+            voteTimestamps[userData.token] = {
+                candidate: selectedCandidateId,
+                candidateName: candidates[selectedCandidateId],
+                timestamp: timestamp,
+                voterName: userData.name
+            };
+            
+            // Save data to localStorage immediately after voting
+            saveDataToStorage();
+            
+            console.log(`Vote recorded: ${userData.name} voted for ${candidates[selectedCandidateId]} at ${timestamp}`);
+            
+            document.getElementById('confirmationModal').classList.add('hidden');
+            document.getElementById('votingPage').classList.add('hidden');
+            document.getElementById('successPage').classList.remove('hidden');
+        }
+
+        function showVisionMission(candidateId) {
+            const candidate = candidateData[candidateId];
+            const modal = document.getElementById('visionModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            title.textContent = `${candidate.name} - ${candidate.class}`;
+            
+            let contentHTML = `
+                <div>
+                    <h4 class="font-bold text-lg text-blue-600 mb-2">VISI:</h4>
+                    <p class="mb-4">${candidate.vision}</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-green-600 mb-2">MISI:</h4>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        ${candidate.mission.map(item => `<li>${item}</li>`).join('')}
+                    </ol>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg text-purple-600 mb-2">PROGRAM KERJA:</h4>
+                    <ol class="list-decimal list-inside space-y-1">
+                        ${candidate.programs.map(item => `<li>${item}</li>`).join('')}
+                    </ol>
+                </div>
+            `;
+            
+            content.innerHTML = contentHTML;
+            modal.classList.remove('hidden');
+        }
+
+        function closeVisionModal() {
+            document.getElementById('visionModal').classList.add('hidden');
+        }
+
+        function logout() {
+            userData = null;
+            selectedCandidateId = null;
+            isAdmin = false;
+            document.getElementById('votingPage').classList.add('hidden');
+            document.getElementById('successPage').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('mainLoginPage').classList.remove('hidden');
+            document.getElementById('gtkLoginForm').reset();
+            document.getElementById('adminLoginForm').reset();
+            document.getElementById('errorMessage').classList.add('hidden');
+            showGTKLogin();
+        }
+
+        // Initialize the application with fresh data
+        window.addEventListener('load', function() {
+            // Check if there's existing data in localStorage
+            const hasExistingData = localStorage.getItem('osisVoteResults') || 
+                                   localStorage.getItem('osisVotedUsers') || 
+                                   localStorage.getItem('osisVoteTimestamps');
+            
+            if (hasExistingData) {
+                // Load existing data if available
+                loadStoredData();
+                console.log('Loaded existing voting data from localStorage');
+            } else {
+                // Initialize with fresh data
+                initializeFreshData();
+                console.log('Initialized with fresh voting data');
+            }
+            
+            // Load voter data from CSV
+            loadVoterData();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98b4d0e123755fbb',t:'MTc1OTkxNzg4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
